@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FS</title>
+  <title>Fardin + Srabony Love</title>
   <style>
     body {
       margin: 0;
       overflow: hidden;
-      background-color: #000000; /* Pure Black */
+      background-color: #000;
     }
     canvas {
       display: block;
@@ -31,8 +31,32 @@
     let stars = [];
     let floatingStars = [];
     let angle = 0;
+    let photoAngle = 0;
+    let dogX = centerX;
+    let dogY = centerY;
 
-    // Heart path formula
+    // Load dog image
+    const dogImage = new Image();
+    dogImage.src = "https://blogger.googleusercontent.com/img/a/AVvXsEiJ6eAiwd095d8XX4TKhNj0STqfULzpbJq0KBLbr4NnD2YUURD59vp1y3Ob-dlgFfC4IGcyfkcBk37AWLdk5yCwRBZ0z3DCoV04mMgvjZ6FXJpZcSn1k6wNAkq2wfIWrWbmhao6Ztg8yoxcQf2igk1fsDCpo0p2dpRdYXuSs1H7mVsRVHk6gsT7aqlbbeOx"; // কুকুরের ছবি (PNG background transparent)
+
+    // Placeholder rotating photo images
+    const photoImages = [
+      "https://blogger.googleusercontent.com/img/a/AVvXsEhxOOR9HnoYoFg9U0RDsj5YPvE7TnrfZeUk0dXdC6Yx9T3ysv7xFl4k57A_0ceUF8B9q1EHi0GU3PC4-DnOzwJ-7QhtCqUgWcBzha4zF4f6BABxlLylmgjWDXDBYS-YBCcXA0uSwqm-qBRg6hf23nbk6mt97OhRXJydFrWjZ3mZR92OZDSSE9wBV_w5PYum",
+      "https://blogger.googleusercontent.com/img/a/AVvXsEiJ6eAiwd095d8XX4TKhNj0STqfULzpbJq0KBLbr4NnD2YUURD59vp1y3Ob-dlgFfC4IGcyfkcBk37AWLdk5yCwRBZ0z3DCoV04mMgvjZ6FXJpZcSn1k6wNAkq2wfIWrWbmhao6Ztg8yoxcQf2igk1fsDCpo0p2dpRdYXuSs1H7mVsRVHk6gsT7aqlbbeOx"; // কুকুরের ছবি (PNG background transparent)
+      "https://blogger.googleusercontent.com/img/a/AVvXsEhtkfgUZTkwOO1xHc0S888CjCyatjqmNPUbGzwldTTYzx80yQcKSyUiCeCqUodMJhpxIw1lko9AW5tSM5JtBUlNh2IAmD8HV5h5ZUaLNL6dEoDl-EeXpdaHeyjHPw9I-Usl1fySiASO_1A4z6pyfas0F-HRgURYW-YvIVrqGj9Lr_3-5I36NC0Ko1Ona7HV",
+      "https://blogger.googleusercontent.com/img/a/AVvXsEiJ6eAiwd095d8XX4TKhNj0STqfULzpbJq0KBLbr4NnD2YUURD59vp1y3Ob-dlgFfC4IGcyfkcBk37AWLdk5yCwRBZ0z3DCoV04mMgvjZ6FXJpZcSn1k6wNAkq2wfIWrWbmhao6Ztg8yoxcQf2igk1fsDCpo0p2dpRdYXuSs1H7mVsRVHk6gsT7aqlbbeOx"; // কুকুরের ছবি (PNG background transparent)
+      "https://blogger.googleusercontent.com/img/a/AVvXsEhxOOR9HnoYoFg9U0RDsj5YPvE7TnrfZeUk0dXdC6Yx9T3ysv7xFl4k57A_0ceUF8B9q1EHi0GU3PC4-DnOzwJ-7QhtCqUgWcBzha4zF4f6BABxlLylmgjWDXDBYS-YBCcXA0uSwqm-qBRg6hf23nbk6mt97OhRXJydFrWjZ3mZR92OZDSSE9wBV_w5PYum",
+      "https://blogger.googleusercontent.com/img/a/AVvXsEiJ6eAiwd095d8XX4TKhNj0STqfULzpbJq0KBLbr4NnD2YUURD59vp1y3Ob-dlgFfC4IGcyfkcBk37AWLdk5yCwRBZ0z3DCoV04mMgvjZ6FXJpZcSn1k6wNAkq2wfIWrWbmhao6Ztg8yoxcQf2igk1fsDCpo0p2dpRdYXuSs1H7mVsRVHk6gsT7aqlbbeOx"; // কুকুরের ছবি (PNG background transparent)
+      "https://blogger.googleusercontent.com/img/a/AVvXsEhtkfgUZTkwOO1xHc0S888CjCyatjqmNPUbGzwldTTYzx80yQcKSyUiCeCqUodMJhpxIw1lko9AW5tSM5JtBUlNh2IAmD8HV5h5ZUaLNL6dEoDl-EeXpdaHeyjHPw9I-Usl1fySiASO_1A4z6pyfas0F-HRgURYW-YvIVrqGj9Lr_3-5I36NC0Ko1Ona7HV",
+      
+        ];
+    const loadedImages = [];
+    for (let i = 0; i < photoImages.length; i++) {
+      const img = new Image();
+      img.src = photoImages[i];
+      loadedImages.push(img);
+    }
+
     function heartFunction(t) {
       const scale = 10;
       let x = 16 * Math.pow(Math.sin(t), 3);
@@ -44,16 +68,13 @@
       };
     }
 
-    // Particle on heart path
     function Particle(x, y) {
       this.x = x;
       this.y = y;
       this.alpha = 1;
-
       this.update = function () {
         this.alpha -= 0.01;
       };
-
       this.draw = function () {
         ctx.globalAlpha = this.alpha;
         ctx.fillStyle = "white";
@@ -64,7 +85,6 @@
       };
     }
 
-    // Twinkling star inside heart
     function Star() {
       const t = Math.random() * 2 * Math.PI;
       const pos = heartFunction(t);
@@ -73,17 +93,13 @@
       this.size = Math.random() * 1.5 + 0.5;
       this.alpha = Math.random() * 0.5 + 0.5;
       this.alphaDirection = Math.random() > 0.5 ? 1 : -1;
-
       this.update = function () {
         this.alpha += this.alphaDirection * 0.01;
-        if (this.alpha <= 0.3 || this.alpha >= 1) {
-          this.alphaDirection *= -1;
-        }
+        if (this.alpha <= 0.3 || this.alpha >= 1) this.alphaDirection *= -1;
       };
-
       this.draw = function () {
         ctx.globalAlpha = this.alpha;
-        ctx.fillStyle = "#ffffff";
+        ctx.fillStyle = "#fff";
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
@@ -91,14 +107,12 @@
       };
     }
 
-    // Floating background stars
     function FloatingStar() {
       this.x = Math.random() * canvas.width;
       this.y = Math.random() * canvas.height;
       this.size = Math.random() * 2;
       this.speedY = Math.random() * 0.5 + 0.2;
       this.alpha = Math.random() * 0.5 + 0.3;
-
       this.update = function () {
         this.y -= this.speedY;
         if (this.y < -5) {
@@ -106,7 +120,6 @@
           this.x = Math.random() * canvas.width;
         }
       };
-
       this.draw = function () {
         ctx.globalAlpha = this.alpha;
         ctx.fillStyle = "white";
@@ -117,46 +130,39 @@
       };
     }
 
-    // Initialize stars
     for (let i = 0; i < 100; i++) stars.push(new Star());
     for (let i = 0; i < 150; i++) floatingStars.push(new FloatingStar());
 
     function animate() {
-      // Make sure the background is always pure black
       ctx.fillStyle = "#000000";
       ctx.globalAlpha = 1;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Add a new particle on heart path
       let point = heartFunction(angle);
       particles.push(new Particle(point.x, point.y));
 
-      // Update and draw heart particles
       particles.forEach((p, i) => {
         p.update();
         p.draw();
         if (p.alpha <= 0) particles.splice(i, 1);
       });
 
-      // Moving dot on heart
       ctx.fillStyle = "white";
       ctx.beginPath();
       ctx.arc(point.x, point.y, 4, 0, Math.PI * 2);
       ctx.fill();
 
-      // Twinkling stars inside heart
       stars.forEach(star => {
         star.update();
         star.draw();
       });
 
-      // Background floating stars
       floatingStars.forEach(star => {
         star.update();
         star.draw();
       });
 
-      // Center Text
+      // Draw text
       ctx.font = "bold 32px Arial";
       ctx.fillStyle = "#ffffff";
       ctx.textAlign = "center";
@@ -164,14 +170,44 @@
       ctx.shadowBlur = 10;
       ctx.fillText("Fardin + Srabony", centerX, centerY);
 
-      // Angle update for animation
+      // Draw rotating photos
+      const photoCount = loadedImages.length;
+      for (let i = 0; i < photoCount; i++) {
+        const angleOffset = (Math.PI * 2 / photoCount) * i + photoAngle;
+        const pos = heartFunction(angleOffset);
+        const img = loadedImages[i];
+        const imgSize = 40;
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(pos.x, pos.y, imgSize / 2, 0, Math.PI * 2);
+        ctx.clip();
+        ctx.drawImage(img, pos.x - imgSize / 2, pos.y - imgSize / 2, imgSize, imgSize);
+        ctx.restore();
+      }
+
+      // 🐶 Draw chasing dog
+      const leadAngle = (Math.PI * 2 / photoCount) * 0 + photoAngle;
+      const leadPos = heartFunction(leadAngle);
+      const speed = 0.03;
+      dogX += (leadPos.x - dogX) * speed;
+      dogY += (leadPos.y - dogY) * speed;
+
+      const dogSize = 45;
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(dogX, dogY, dogSize / 2, 0, Math.PI * 2);
+      ctx.clip();
+      ctx.drawImage(dogImage, dogX - dogSize / 2, dogY - dogSize / 2, dogSize, dogSize);
+      ctx.restore();
+
       angle += 0.03;
+      photoAngle += 0.01;
       requestAnimationFrame(animate);
     }
 
     animate();
 
-    // Resize handling
     window.addEventListener("resize", () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
