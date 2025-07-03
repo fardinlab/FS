@@ -37,19 +37,17 @@
 
     // Load dog image
     const dogImage = new Image();
-    dogImage.src = "https://blogger.googleusercontent.com/img/a/AVvXsEiJ6eAiwd095d8XX4TKhNj0STqfULzpbJq0KBLbr4NnD2YUURD59vp1y3Ob-dlgFfC4IGcyfkcBk37AWLdk5yCwRBZ0z3DCoV04mMgvjZ6FXJpZcSn1k6wNAkq2wfIWrWbmhao6Ztg8yoxcQf2igk1fsDCpo0p2dpRdYXuSs1H7mVsRVHk6gsT7aqlbbeOx"; // কুকুরের ছবি (PNG background transparent)
+    dogImage.src = "#"; // কুকুরের ছবি (PNG background transparent)
 
     // Placeholder rotating photo images
     const photoImages = [
       "https://blogger.googleusercontent.com/img/a/AVvXsEhxOOR9HnoYoFg9U0RDsj5YPvE7TnrfZeUk0dXdC6Yx9T3ysv7xFl4k57A_0ceUF8B9q1EHi0GU3PC4-DnOzwJ-7QhtCqUgWcBzha4zF4f6BABxlLylmgjWDXDBYS-YBCcXA0uSwqm-qBRg6hf23nbk6mt97OhRXJydFrWjZ3mZR92OZDSSE9wBV_w5PYum",
-      "https://blogger.googleusercontent.com/img/a/AVvXsEiJ6eAiwd095d8XX4TKhNj0STqfULzpbJq0KBLbr4NnD2YUURD59vp1y3Ob-dlgFfC4IGcyfkcBk37AWLdk5yCwRBZ0z3DCoV04mMgvjZ6FXJpZcSn1k6wNAkq2wfIWrWbmhao6Ztg8yoxcQf2igk1fsDCpo0p2dpRdYXuSs1H7mVsRVHk6gsT7aqlbbeOx"; // কুকুরের ছবি (PNG background transparent)
       "https://blogger.googleusercontent.com/img/a/AVvXsEhtkfgUZTkwOO1xHc0S888CjCyatjqmNPUbGzwldTTYzx80yQcKSyUiCeCqUodMJhpxIw1lko9AW5tSM5JtBUlNh2IAmD8HV5h5ZUaLNL6dEoDl-EeXpdaHeyjHPw9I-Usl1fySiASO_1A4z6pyfas0F-HRgURYW-YvIVrqGj9Lr_3-5I36NC0Ko1Ona7HV",
-      "https://blogger.googleusercontent.com/img/a/AVvXsEiJ6eAiwd095d8XX4TKhNj0STqfULzpbJq0KBLbr4NnD2YUURD59vp1y3Ob-dlgFfC4IGcyfkcBk37AWLdk5yCwRBZ0z3DCoV04mMgvjZ6FXJpZcSn1k6wNAkq2wfIWrWbmhao6Ztg8yoxcQf2igk1fsDCpo0p2dpRdYXuSs1H7mVsRVHk6gsT7aqlbbeOx"; // কুকুরের ছবি (PNG background transparent)
+      "https://blogger.googleusercontent.com/img/a/AVvXsEiUrsISOUbjmJysgsxZLAzTTobrsOaN7lVlcMOc5iR_NTyAN9cxD2Lqj0-qgK00nB6Dg2RneM02IthiQ5jyjC4TmBfy1W7mNS2iIS9wzt27w7xmf_FUNJnb4O43j7EqNdZoh2mWmFLVD_93Ox4wsYXTG0yJ5xLjbw7uwO-Ywkc2n07Q5zPnJ0P4IxoyzAfH",
       "https://blogger.googleusercontent.com/img/a/AVvXsEhxOOR9HnoYoFg9U0RDsj5YPvE7TnrfZeUk0dXdC6Yx9T3ysv7xFl4k57A_0ceUF8B9q1EHi0GU3PC4-DnOzwJ-7QhtCqUgWcBzha4zF4f6BABxlLylmgjWDXDBYS-YBCcXA0uSwqm-qBRg6hf23nbk6mt97OhRXJydFrWjZ3mZR92OZDSSE9wBV_w5PYum",
-      "https://blogger.googleusercontent.com/img/a/AVvXsEiJ6eAiwd095d8XX4TKhNj0STqfULzpbJq0KBLbr4NnD2YUURD59vp1y3Ob-dlgFfC4IGcyfkcBk37AWLdk5yCwRBZ0z3DCoV04mMgvjZ6FXJpZcSn1k6wNAkq2wfIWrWbmhao6Ztg8yoxcQf2igk1fsDCpo0p2dpRdYXuSs1H7mVsRVHk6gsT7aqlbbeOx"; // কুকুরের ছবি (PNG background transparent)
       "https://blogger.googleusercontent.com/img/a/AVvXsEhtkfgUZTkwOO1xHc0S888CjCyatjqmNPUbGzwldTTYzx80yQcKSyUiCeCqUodMJhpxIw1lko9AW5tSM5JtBUlNh2IAmD8HV5h5ZUaLNL6dEoDl-EeXpdaHeyjHPw9I-Usl1fySiASO_1A4z6pyfas0F-HRgURYW-YvIVrqGj9Lr_3-5I36NC0Ko1Ona7HV",
-      
-        ];
+      "https://blogger.googleusercontent.com/img/a/AVvXsEiUrsISOUbjmJysgsxZLAzTTobrsOaN7lVlcMOc5iR_NTyAN9cxD2Lqj0-qgK00nB6Dg2RneM02IthiQ5jyjC4TmBfy1W7mNS2iIS9wzt27w7xmf_FUNJnb4O43j7EqNdZoh2mWmFLVD_93Ox4wsYXTG0yJ5xLjbw7uwO-Ywkc2n07Q5zPnJ0P4IxoyzAfH",
+    ];
     const loadedImages = [];
     for (let i = 0; i < photoImages.length; i++) {
       const img = new Image();
