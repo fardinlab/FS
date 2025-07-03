@@ -32,7 +32,7 @@
     let floatingStars = [];
     let angle = 0;
 
-    // Heart Curve
+    // Heart path formula
     function heartFunction(t) {
       const scale = 10;
       let x = 16 * Math.pow(Math.sin(t), 3);
@@ -44,7 +44,7 @@
       };
     }
 
-    // Heart Particle
+    // Particle on heart path
     function Particle(x, y) {
       this.x = x;
       this.y = y;
@@ -64,7 +64,7 @@
       };
     }
 
-    // Stars inside heart
+    // Twinkling star inside heart
     function Star() {
       const t = Math.random() * 2 * Math.PI;
       const pos = heartFunction(t);
@@ -91,7 +91,7 @@
       };
     }
 
-    // Floating stars across screen
+    // Floating background stars
     function FloatingStar() {
       this.x = Math.random() * canvas.width;
       this.y = Math.random() * canvas.height;
@@ -117,40 +117,46 @@
       };
     }
 
+    // Initialize stars
     for (let i = 0; i < 100; i++) stars.push(new Star());
     for (let i = 0; i < 150; i++) floatingStars.push(new FloatingStar());
 
     function animate() {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.15)";
+      // Make sure the background is always pure black
+      ctx.fillStyle = "#000000";
+      ctx.globalAlpha = 1;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+      // Add a new particle on heart path
       let point = heartFunction(angle);
       particles.push(new Particle(point.x, point.y));
 
+      // Update and draw heart particles
       particles.forEach((p, i) => {
         p.update();
         p.draw();
-        if (p.alpha <= 0) {
-          particles.splice(i, 1);
-        }
+        if (p.alpha <= 0) particles.splice(i, 1);
       });
 
+      // Moving dot on heart
       ctx.fillStyle = "white";
       ctx.beginPath();
       ctx.arc(point.x, point.y, 4, 0, Math.PI * 2);
       ctx.fill();
 
+      // Twinkling stars inside heart
       stars.forEach(star => {
         star.update();
         star.draw();
       });
 
+      // Background floating stars
       floatingStars.forEach(star => {
         star.update();
         star.draw();
       });
 
-      // White glowing text
+      // Center Text
       ctx.font = "bold 32px Arial";
       ctx.fillStyle = "#ffffff";
       ctx.textAlign = "center";
@@ -158,12 +164,14 @@
       ctx.shadowBlur = 10;
       ctx.fillText("Fardin + Srabony", centerX, centerY);
 
+      // Angle update for animation
       angle += 0.03;
       requestAnimationFrame(animate);
     }
 
     animate();
 
+    // Resize handling
     window.addEventListener("resize", () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
